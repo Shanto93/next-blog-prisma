@@ -34,8 +34,29 @@ const getUserById = async (id: number) => {
   return user;
 };
 
+const deleteUser = async (id: number) => {
+  const deleteUser = await prisma.user.delete({
+    where: {
+      id,
+    },
+  });
+  return deleteUser;
+};
+
+const editUser = async (id: number, payload: Prisma.UserUpdateInput) => {
+  const editUser = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return editUser;
+};
+
 export const userServices = {
   createUser,
   getAllUsers,
   getUserById,
+  deleteUser,
+  editUser,
 };

@@ -48,8 +48,43 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const result = await userServices.deleteUser(id);
+    res.status(201).json({
+      status: "User deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "User delete failed",
+      message: error instanceof Error ? error.message : error,
+    });
+  }
+};
+
+const editUser = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const payload = req.body;
+    const result = await userServices.editUser(id, payload);
+    res.status(201).json({
+      status: "User updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "User update failed",
+      message: error instanceof Error ? error.message : error,
+    });
+  }
+};
+
 export const userController = {
   createUser,
   getAllUsers,
   getUserById,
+  deleteUser,
+  editUser,
 };
