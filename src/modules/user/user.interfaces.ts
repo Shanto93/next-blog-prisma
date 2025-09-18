@@ -16,7 +16,7 @@ export interface User {
   id: number;
   email: string;
   name: string;
-  password: string;
+  password?: string;
   role: Role;
   phone: string;
   pictures: string;
@@ -55,7 +55,7 @@ export interface PostWithAuthor extends Omit<Post, "author"> {
 export interface CreateUserInput {
   email: string;
   name: string;
-  password: string;
+  password?: string;
   phone: string;
   pictures: string;
   role?: Role;
