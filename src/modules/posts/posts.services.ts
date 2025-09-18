@@ -20,11 +20,27 @@ const getAPost = async (id: number) => {
   return post;
 };
 
-const getAllPosts = async (page: number, limit: number) => {
+const getAllPosts = async (page: number, limit: number, searchItem: string) => {
   const skip = (page - 1) * limit;
   const allPosts = await prisma.post.findMany({
     skip,
     take: limit,
+    where: {
+      OR: [
+        {
+          title: {
+            contains: searchItem,
+            mode: "insensitive",
+          },
+        },
+        {
+          content: {
+            contains: searchItem,
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
   });
   return allPosts;
 };
