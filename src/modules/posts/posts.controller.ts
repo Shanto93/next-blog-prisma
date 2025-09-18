@@ -17,16 +17,64 @@ const createPosts = async (req: Request, res: Response) => {
   }
 };
 
+const getAPost = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const post = await postServices.getAPost(id);
+    res.status(201).json({
+      message: "Post retrieved successfully",
+      data: post,
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: "Post Retrieve Failed",
+      data: error instanceof Error ? error.message : error,
+    });
+  }
+};
 const getAllPosts = async (req: Request, res: Response) => {
   try {
     const getAllPosts = await postServices.getAllPosts();
     res.status(201).json({
-      message: "Post retrieved successfully",
+      message: "Posts retrieved successfully",
       data: getAllPosts,
     });
   } catch (error) {
     res.status(404).json({
-      message: "User Retrieve Failed",
+      message: "Posts Retrieve Failed",
+      data: error instanceof Error ? error.message : error,
+    });
+  }
+};
+
+const deletePost = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const deletedPost = await postServices.deletePost(id);
+    res.status(201).json({
+      message: "Posts Deleted successfully",
+      data: deletedPost,
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: "Posts Delition Failed",
+      data: error instanceof Error ? error.message : error,
+    });
+  }
+};
+
+const updatePost = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const payload = req.body;
+    const updatedPost = await postServices.updatePost(id, payload);
+    res.status(201).json({
+      message: "Post Updated successfully",
+      data: updatedPost,
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: "Posts Update Failed",
       data: error instanceof Error ? error.message : error,
     });
   }
@@ -35,4 +83,7 @@ const getAllPosts = async (req: Request, res: Response) => {
 export const postsController = {
   createPosts,
   getAllPosts,
+  getAPost,
+  deletePost,
+  updatePost,
 };
