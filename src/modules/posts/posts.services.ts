@@ -20,8 +20,12 @@ const getAPost = async (id: number) => {
   return post;
 };
 
-const getAllPosts = async () => {
-  const allPosts = await prisma.post.findMany();
+const getAllPosts = async (page: number, limit: number) => {
+  const skip = (page - 1) * limit;
+  const allPosts = await prisma.post.findMany({
+    skip,
+    take: limit,
+  });
   return allPosts;
 };
 

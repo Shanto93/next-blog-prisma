@@ -34,7 +34,9 @@ const getAPost = async (req: Request, res: Response) => {
 };
 const getAllPosts = async (req: Request, res: Response) => {
   try {
-    const getAllPosts = await postServices.getAllPosts();
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 5;
+    const getAllPosts = await postServices.getAllPosts(page, limit);
     res.status(201).json({
       message: "Posts retrieved successfully",
       data: getAllPosts,
